@@ -21,7 +21,7 @@ public protocol ImageLoader {
     /// Load an image on a separate thread and use the result in a provided completion block.
     /// - Parameters:
     ///   - urlString: Converted into a `URL` for requesting an image.
-    ///   - placeholderImage: Optional image to apply using the provided completion handler while the desired image is loaded.
+    ///   - placeholderImage: Optional image to apply using the provided completion handler while the desired image is loading.
     ///   - completionHandler: A block that receives both a `UIImage` (on succuess) and an ``AsyncImageError`` (on failure).
     func updateImage(
         fromURLString urlString: String?,
@@ -34,7 +34,7 @@ public extension ImageLoader {
     /// Load an image on a separate thread and use the result in a provided completion block.
     /// - Parameters:
     ///   - url: The source of the image to be fetched
-    ///   - placeholderImage: Optional image to apply using the provided completion handler while the desired image is loaded.
+    ///   - placeholderImage: Optional image to apply using the provided completion handler while the desired image is loading.
     ///   - completionHandler: A block that receives both a `UIImage` (on succuess) and an ``AsyncImageError`` (on failure).
     func updateImage(
         fromURL url: URL?,
@@ -51,7 +51,7 @@ public extension ImageLoader {
     /// Load an image on a background thread before returning an image on the main thread.
     /// - Parameters:
     ///   - url: The source of the image to be fetched
-    ///   - placeholderImage: Optional image to apply using the provided completion handler while the desired image is loaded.
+    ///   - placeholderImage: Optional image to apply using the provided completion handler while the desired image is loading.
     /// - Returns: A successfully loaded and cached image
     func updateImage(fromURL url: URL?, placeholderImage: UIImage? = nil) async throws -> UIImage {
         try await withCheckedThrowingContinuation { continuation in
@@ -160,6 +160,7 @@ public class AsyncImageLoader: ImageLoader {
 
 // MARK: - Custom Errors
 
+/// A type of error that can occur with loading an image.
 public enum AsyncImageError: Error {
     case invalidURL
     case downloadError(error: Error)
