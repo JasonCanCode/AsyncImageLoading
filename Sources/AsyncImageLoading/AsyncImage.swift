@@ -6,10 +6,8 @@
 
 import SwiftUI
 
-/// A view that displays an asychronously loaded image
+/// A SwiftUI view that displays an asychronously loaded image
 public struct AsyncImage<LoadingView: View, FailureView: View>: View {
-    // TODO: Test SwiftLint
-
     /// The source of the image to be fetched
     public let url: URL?
     /// Defines how the image fills the available space.
@@ -21,6 +19,18 @@ public struct AsyncImage<LoadingView: View, FailureView: View>: View {
 
     @State private var loadingState: LoadingState = .loading
     @State private var image: UIImage?
+
+    public init(
+        url: URL?,
+        contentMode: SwiftUI.ContentMode,
+        loadingView: @escaping () -> LoadingView,
+        failureView: @escaping () -> FailureView
+    ) {
+        self.url = url
+        self.contentMode = contentMode
+        self.loadingView = loadingView
+        self.failureView = failureView
+    }
 
     public var body: some View {
         Color.clear
@@ -75,7 +85,9 @@ public extension AsyncImage {
 
     /// Creates an image view that display nothing during the loading and failure states.
     ///
-    /// - Parameter url: The `URL` representing the location of a resource to be loaded.
+    /// - Parameters:
+    ///   - url: The `URL` representing the location of a resource to be loaded.
+    ///   - contentMode: Defines how the image fills the available space.
     init(
         url: URL?,
         contentMode: SwiftUI.ContentMode = .fill
@@ -92,6 +104,7 @@ public extension AsyncImage {
     ///
     /// - Parameters:
     ///   - url: The `URL` representing the location of a resource to be loaded.
+    ///   - contentMode: Defines how the image fills the available space.
     ///   - loadingView: The view to display while the resource is being loaded.
     init(
         url: URL?,
@@ -110,6 +123,7 @@ public extension AsyncImage {
     ///
     /// - Parameters:
     ///   - url: The `URL` representing the location of a resource to be loaded.
+    ///   - contentMode: Defines how the image fills the available space.
     ///   - failureView: The view to display if the resource is unable to be fetched.
     init(
         url: URL?,
