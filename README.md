@@ -8,13 +8,13 @@ Use the singleton of `AsyncImageLoader` to fetch your image on a background thre
 
 ```swift
 AsyncImageLoader.shared.updateImage(
-        fromURLString: user.profileImagePath, 
-        placeholderImage: UIImage(systemName: "photo")
-    ) { [weak self] newImage, _ in
-        if let newImage = newImage {
-            self?.image = newImage
-        }
+    fromURLString: user.profileImagePath, 
+    placeholderImage: UIImage(systemName: "photo")
+) { [weak self] newImage, _ in
+    if let newImage = newImage {
+        self?.image = newImage
     }
+}
 ```
 
 ## UIKit
@@ -54,13 +54,13 @@ When you provide a placeholder image, `AsyncImageLoader` will provide that back 
 
 ```swift
 AsyncImageLoader.shared.updateImage(
-        fromURLString: user.profileImagePath, 
-        placeholderImage: UIImage(systemName: "photo")
-    ) { [weak self] newImage, _ in
-        if let newImage = newImage {
-            self?.image = newImage
-        }
+    fromURLString: user.profileImagePath, 
+    placeholderImage: UIImage(systemName: "photo")
+) { [weak self] newImage, _ in
+    if let newImage = newImage {
+        self?.image = newImage
     }
+}
 ```
 
 If we are using this to load a profile photo, the screen will first appear with the SFSymbol as their picture. Their actual photo will download in the background and replace the placeholder image once complete. Should the download fail, the placeholder would remain because we are only updating `self.image` when a new photo is provided and failure means a `nil` value is passed to the completion handler. 
